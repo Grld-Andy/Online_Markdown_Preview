@@ -36,8 +36,17 @@ const Content: React.FC<Props> = ({ currentNote, content, setContent }) => {
       setPreview('')
       return
     }
-    let formattedContent = textareaContent.split(/\n/g)
-    formattedContent = formattedContent.map((sentence) => {
+    let inCodeBlock = false
+    
+    const formattedContent = textareaContent.split(/\n/g).map((sentence) => {
+      if (sentence.startsWith('```')) {
+        inCodeBlock = !inCodeBlock
+        return inCodeBlock ? '<blockquote class="code"><pre><code>' : '</code></pre></blockquote>'
+      }
+      if (inCodeBlock) {
+        return `${sentence}<br>`
+      }
+
       const startNum = sentence.split('.')[0]
       if (sentence.startsWith('# ')) {
         // header 1
@@ -60,9 +69,6 @@ const Content: React.FC<Props> = ({ currentNote, content, setContent }) => {
       } else if (sentence.startsWith('> ')) {
         // blockquote
         return `<blockquote class="blockquote">${sentence.slice(2)}</blockquote>`
-      } else if (sentence.startsWith('``` ') && sentence.endsWith(' ```')) {
-        // code
-        return `<blockquote class="code">${sentence.slice(4, sentence.length - 4)}</blockquote>`
       } else if (sentence.startsWith('- ')) {
         // unordered list
         return `<ul><li style="margin-left: 37px">${sentence.slice(2)}</li></ul>`
