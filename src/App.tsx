@@ -36,6 +36,9 @@ function App() {
       case 4:
         setFetchError('Failed to delete')
         break
+      case 5:
+        setFetchError('Saved')
+        break
       default:
         setFetchError('')
     }
@@ -54,6 +57,7 @@ function App() {
       .eq('id', currentNote!.id)
     if (!error) {
       await fetchNotes()
+      handleFetchError(5)
       console.log(data)
     } else {
       handleFetchError(3)
