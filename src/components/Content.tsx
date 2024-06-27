@@ -89,7 +89,7 @@ const Content: React.FC<Props> = ({ currentNote, content, setContent }) => {
         <div className="col1">
           <section className="row1">
             <p>MARKDOWN</p>
-            <img src="/public/icon-show-preview.svg" alt="" onClick={changeView} />
+            <img src="/icon-show-preview.svg" alt="" onClick={changeView} />
           </section>
           <textarea id="textarea" onChange={handlePreviewChange} value={content}></textarea>
         </div>
