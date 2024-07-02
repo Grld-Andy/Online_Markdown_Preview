@@ -13,6 +13,7 @@ interface Props {
 }
 
 const Sidebar: React.FC<Props> = ({ handleSetTheme, notes, createNew, handleCurrentNote }) => {
+  // generate title for a new note, default title is untitled_1 and increments by 1
   const generateTitle = (notes: Note[] | null) => {
     let maxIndex = 0
     if (notes) {
@@ -30,18 +31,21 @@ const Sidebar: React.FC<Props> = ({ handleSetTheme, notes, createNew, handleCurr
     return `Untitled_${newIndex}.md`
   }
 
+  // handle new note creation when user clicks + New Document button
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const title = generateTitle(notes)
     createNew(title)
   }
 
+  // format date to display in the sidebar list
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
     const formattedDate = date.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
     return formattedDate
   }
 
+  // render sidebar with list of notes and new note creation form
   return (
     <div className="sidebar">
       <div className="upper">
@@ -52,6 +56,7 @@ const Sidebar: React.FC<Props> = ({ handleSetTheme, notes, createNew, handleCurr
             <p>+ New Document</p>
           </button>
         </form>
+        {/* display list of all create notes */}
         {notes &&
           notes.map((note, index) => {
             return (
@@ -65,6 +70,7 @@ const Sidebar: React.FC<Props> = ({ handleSetTheme, notes, createNew, handleCurr
             )
           })}
       </div>
+      {/* button for changing theme */}
       <div className="lower">
         <img src="/icon-dark-mode.svg" alt="Dark Mode Icon" className="moon" />
         <div className="toggle-button" onClick={handleSetTheme}>

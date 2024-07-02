@@ -17,6 +17,7 @@ const Navbar: React.FC<Props> = ({ handleSetSidebar, showSidebar, handleDelete, 
   const [filename, setFilename] = useState(currentNote ? currentNote.title : 'untitled.md')
   const [showModal, setShowModal] = useState(false)
 
+  // change filename on current note change
   useEffect(() => {
     if (currentNote) {
       setFilename(currentNote.title)
@@ -48,6 +49,7 @@ const Navbar: React.FC<Props> = ({ handleSetSidebar, showSidebar, handleDelete, 
               : <img src="/icon-menu.svg" alt="" />}
           </button>
           <h1>MARKDOWN</h1>
+          {/* notes details, only displays when a note is selected */}
           {currentNote &&
             <div className="document_name">
               <div className="line"></div>
@@ -69,6 +71,7 @@ const Navbar: React.FC<Props> = ({ handleSetSidebar, showSidebar, handleDelete, 
           </div>
         }
       </nav>
+      {/* modal to confirm deletion of a note */}
       {
         showModal &&
         <div className="overflow" onClick={handleShowModal}>

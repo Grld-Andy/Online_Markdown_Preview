@@ -31,6 +31,7 @@ const Content: React.FC<Props> = ({ currentNote, content, setContent }) => {
     updatePreview(textareaContent)
   }
 
+  // function to convert text to markdown in preview
   const updatePreview = (textareaContent: string) => {
     if (!textareaContent) {
       setPreview('')

@@ -5,6 +5,7 @@ import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import supabase from './config/supabaseClient'
 
+// interface for notes
 interface Note {
   id: number
   title: string
@@ -12,6 +13,8 @@ interface Note {
   created_at: string
 }
 
+// holds all components
+// store theme in localStorage
 function App() {
   const [showSidebar, setShowSideBar] = useState<boolean>(false)
   const [content, setContent] = useState<string>('')
@@ -22,6 +25,7 @@ function App() {
   const [currentNote, setCurrentNote] = useState<Note | null>(null)
   const [fetchError, setFetchError] = useState<string>('')
 
+  // display fetch errors and feedback on save
   const handleFetchError = (error: number) => {
     switch (error) {
       case 1:
@@ -47,6 +51,7 @@ function App() {
     }, 2000)
   }
 
+  // save function
   const handleSave = async (updateTitle: string) => {
     const { data, error } = await supabase
       .from('notes')
@@ -64,6 +69,7 @@ function App() {
     }
   }
 
+  // fetch all notes from database
   const fetchNotes = async () => {
     const { data, error } = await supabase.from('notes').select()
     if (error) {
@@ -75,6 +81,7 @@ function App() {
     }
   }
 
+  // create new note
   const createNew = async (title: string) => {
     const { data, error } = await supabase.from('notes').insert({
       title: title,
@@ -88,6 +95,7 @@ function App() {
     }
   }
 
+  // delete a note
   const handleDelete = async (id: number) => {
     const { data, error } = await supabase.from('notes').delete().eq('id', id)
     if (!error) {
@@ -100,18 +108,22 @@ function App() {
     }
   }
 
+  // fetch notes on startup
   useEffect(() => {
     fetchNotes()
   }, [])
 
+  // display or hide sidebar
   const handleSetSidebar = () => {
     setShowSideBar(!showSidebar)
   }
 
+  // change current note
   const handleCurrentNote = (id: number) => {
     setCurrentNote(notes![id])
   }
 
+  // change and save theme in localstorage
   const handleSetTheme = () => {
     if (theme === 'light') {
       setTheme('dark')
@@ -142,6 +154,7 @@ function App() {
         />
         <Content currentNote={currentNote} content={content} setContent={setContent} />
       </div>
+      {/* display fetch errors */}
       {fetchError && (
         <div className="error">
           <p>{fetchError}</p>
