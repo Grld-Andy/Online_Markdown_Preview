@@ -58,30 +58,34 @@ const Navbar: React.FC<Props> = ({ handleSetSidebar, showSidebar, handleDelete, 
               </div>
             </div>}
         </div>
-        {currentNote &&
+        {
+          currentNote &&
           <div className="right">
             <img src="/icon-delete.svg" alt="" className="svg-delete" onClick={handleShowModal} />
             <button onClick={() => handleSave(filename)}>
               <img src="/icon-save.svg" alt="" className="svg-save" />
               <p>Save Changes</p>
             </button>
-          </div>}
+          </div>
+        }
       </nav>
-      {showModal &&
+      {
+        showModal &&
         <div className="overflow" onClick={handleShowModal}>
           <div className="modal">
             <h1>Delete this document?</h1>
             <p>
               Are you sure you want to delete {filename} and its contents?
-                        </p>
+            </p>
             <p>
               This action cannot be reversed
-                        </p>
+              </p>
             <button onClick={deleteModal}>
               Confirm & Delete
-                        </button>
+              </button>
           </div>
-        </div>}
+        </div>
+      }
     </div>
   )
 }
